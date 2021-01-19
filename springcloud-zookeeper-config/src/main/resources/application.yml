@@ -1,0 +1,38 @@
+server:
+  port: 8851
+spring:
+  application:
+    name: myzkconfigserver
+  cloud:
+    config:
+      server:
+        git:
+          #### config-server 读取git环境地址
+          uri: https://github.com/guoyu12/springcloudconfig
+          ###git配置文件目录位置 github文件springcloud-config-dev.properties 在首页所以为 /  在目录中需要配置目录名称
+          search-paths: /
+          force-pull: true
+      label: main
+    zookeeper:
+      connect-string: 121.4.64.149:2181
+ribbon:
+  # 请求连接的超时时间
+  connectTimeout: 2000
+  # 请求处理的超时时间
+  readTimeout: 2000
+  #对当前实例的重试次数
+  maxAutoRetries: 2
+  # 切换实例的重试次数  对失败的服务只访问3次
+  maxAutoRetriesNextServer: 3
+  #对所有操作请求都进行重试
+  okToRetryOnAllOperations: true
+feign:
+  hystrix:
+    enabled: true
+#禁止hystrix超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false

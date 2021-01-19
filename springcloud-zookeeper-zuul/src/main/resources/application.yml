@@ -1,0 +1,29 @@
+server:
+  port: 8861
+spring:
+  application:
+    name: myzkzuul
+  cloud:
+    zookeeper:
+      connect-string: 121.4.64.149:2181
+zuul:
+  routes:
+    #此名称可以随意编写(最好一目了然)
+    member:
+      #访问eureka-member服务: http://localhost:8861/api-member/member/getMember
+      #服务名称为eureka-member的请求都会转到当前请求下
+      #service-id 服务名称
+      path: /api-member/**
+      service-id: myzkmember
+    #此名称可以随意编写
+    order:
+      #访问eureka-order服务: http://localhost:8861/eureka-order/order/getOrder
+      #服务名称为eureka-order的请求都会转到当前请求下
+      path: /api-order/**
+      service-id: myzkorder
+#开启所有监控中心
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
